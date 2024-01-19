@@ -1,0 +1,24 @@
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+
+  default:
+    cmds:
+      - task --list-all
+
+  build:
+    dir: cryptozombies
+    cmds:
+      - forge build
+
+  test:
+    dir: cryptozombies
+    cmds:
+      - forge test --gas-report
+
+  deploy:
+    dir: cryptozombies
+    cmds:
+      - forge create --rpc-url src/Counter.sol:Counter
