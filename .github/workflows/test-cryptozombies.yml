@@ -1,4 +1,4 @@
-name: test
+name: test cryptozombies
 
 on: workflow_dispatch
 
@@ -7,10 +7,15 @@ env:
 
 jobs:
   check:
+
+    defaults:
+      run:
+        working-directory: cryptozombies
+
     strategy:
       fail-fast: true
 
-    name: Foundry project
+    name: Cryptozombies Foundry project
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
