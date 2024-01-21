@@ -8,17 +8,17 @@ tasks:
     cmds:
       - task --list-all
 
-  build:
-    dir: cryptozombies
+  contracts-build:
+    dir: contracts
     cmds:
       - forge build
 
-  test:
-    dir: cryptozombies
+  contracts-test:
+    dir: contracts
     cmds:
       - forge test --gas-report
 
-  deploy:
-    dir: cryptozombies
+  contracts-deploy:
+    dir: contracts
     cmds:
-      - forge create --rpc-url src/Counter.sol:Counter
+      - forge create --rpc-url src/zombiefeeding.sol:ZombieFeeding

@@ -1,6 +1,6 @@
-name: test cryptozombies
+name: test cryptozombies contracts
 
-on: workflow_dispatch
+on: [push,workflow_dispatch]
 
 env:
   FOUNDRY_PROFILE: ci
@@ -10,7 +10,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: cryptozombies
+        working-directory: contracts
 
     strategy:
       fail-fast: true
