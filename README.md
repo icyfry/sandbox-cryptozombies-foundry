@@ -1,7 +1,7 @@
 # Sandbox Cryptozombies and Foundry
 
 <img src="https://img.shields.io/github/languages/top/icyfry/sandbox-cryptozombies-foundry" /> <img src="https://img.shields.io/badge/solidity-0.8.13-005850?style=flat"> <img src="https://img.shields.io/badge/-Ethereum-005850?style=flat&logo=Ethereum">
-[![Build and deploy](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/test-cryptozombies.yml/badge.svg?branch=main)](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/test-cryptozombies.yml)
+[![test cryptozombies contracts](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/test-cryptozombies-contracts.yml/badge.svg)](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/test-cryptozombies-contracts.yml)
 
 This repository contains source codes for experimentation of [Cryptozombies](https://cryptozombies.io/en/) with [Foundry](https://github.com/foundry-rs)
 
