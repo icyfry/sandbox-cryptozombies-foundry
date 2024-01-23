@@ -11,6 +11,7 @@ tasks:
   contracts-build:
     dir: contracts
     cmds:
+      - forge fmt
       - forge build
 
   contracts-test:
@@ -21,4 +22,6 @@ tasks:
   contracts-deploy:
     dir: contracts
     cmds:
-      - forge create --rpc-url src/zombiefeeding.sol:ZombieFeeding
+      - forge create --rpc-url "http://127.0.0.1:8545"
+                     --private-key "{{.PRIVATE_KEY_LOCAL}}"
+                     src/zombiefeeding.sol:ZombieFeeding

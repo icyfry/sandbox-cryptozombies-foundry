@@ -13,8 +13,7 @@ contract CounterTest is Test {
 
     function test_Create() public {
         zombieFactory.createRandomZombie("test");
-        (string memory name,,,) = zombieFactory.zombies(0); 
+        (string memory name,,,,,) = zombieFactory.zombies(0);
         assertEq(name, "test");
     }
-
 }
