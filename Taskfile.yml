@@ -12,10 +12,11 @@ tasks:
     dir: contracts
     cmds:
       - forge fmt
-      - forge build
+      - forge build --out "../dapp/src/abi"
 
   contracts-test:
     dir: contracts
+    deps: [contracts-build]
     cmds:
       - forge test --gas-report
 
@@ -25,3 +26,15 @@ tasks:
       - forge create --rpc-url "http://127.0.0.1:8545"
                      --private-key "{{.PRIVATE_KEY_LOCAL}}"
                      src/zombiefeeding.sol:ZombieFeeding
+
+  frontend-build:
+    dir: dapp
+    cmds:
+      - pnpm i
+      - pnpm run build
+
+  frontend-run:
+    dir: dapp
+    deps: [frontend-build]
+    cmds:
+      - pnpm run dev --open
