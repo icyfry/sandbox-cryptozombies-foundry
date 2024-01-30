@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@master
         with:
           submodules: recursive
       - name: Install Foundry
@@ -46,12 +46,17 @@ jobs:
         working-directory: dapp
     steps:
     - uses: actions/checkout@master
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - uses: actions/setup-node@master
+      with:
+        node-version: 20
     - name: Install pnpm 
       uses: pnpm/action-setup@v2
       with:
         version: latest
         run_install: false
+        node-version: 20
     - name: Install Foundry
       uses: foundry-rs/foundry-toolchain@v1
       with:
@@ -64,17 +69,9 @@ jobs:
     - name: Build and tests
       run: |
         pnpm run build
-        pnpm run coverage 
-
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        pnpm run coverage
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
