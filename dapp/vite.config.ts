@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import { fileURLToPath } from 'url'
 import vue from '@vitejs/plugin-vue'
@@ -8,7 +9,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      web3: '../node_modules/web3/dist/web3.min.js',
+      web3: './node_modules/web3/dist/web3.min.js',
     },
+  },
+  test: {
+    coverage: {
+      reporter: 'lcov',
+    },
+    // reporters: ['html', 'json']
   },
 })

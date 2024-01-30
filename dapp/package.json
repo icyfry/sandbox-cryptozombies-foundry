@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "lint": "eslint ./src/**/*.vue --fix",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
@@ -16,10 +17,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
+    "@vitest/coverage-v8": "^1.2.2",
     "eslint": "^8.56.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^1.2.2",
     "vue-tsc": "^1.8.25"
   }
 }
