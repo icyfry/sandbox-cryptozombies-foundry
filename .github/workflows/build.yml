@@ -1,4 +1,5 @@
 name: Build
+
 on:
   push:
     branches:
@@ -12,13 +13,13 @@ env:
 jobs:
 
   foundry:
-    name: Cryptozombies Foundry project
+    name: Cryptozombies foundry project
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: contracts
     strategy:
       fail-fast: true
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,11 +47,18 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
-    - uses: pnpm/action-setup@v2
-      name: Install pnpm
+    - name: Install pnpm 
+      uses: pnpm/action-setup@v2
       with:
         version: latest
         run_install: false
+    - name: Install Foundry
+      uses: foundry-rs/foundry-toolchain@v1
+      with:
+        version: nightly
+    - name: Generate ABI with foundry
+      working-directory: contracts
+      run: forge build --out "../dapp/src/abi"
     - name: Installing project dependencies
       run: pnpm install
     - name: Build and tests
