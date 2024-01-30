@@ -47,8 +47,10 @@ jobs:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
     - uses: pnpm/action-setup@v2
-        with:
-          version: latest
+      name: Install pnpm
+      with:
+        version: latest
+        run_install: false
     - name: Installing project dependencies
       run: pnpm install
     - name: Build and tests
