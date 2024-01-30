@@ -22,7 +22,6 @@ function getZombiesByOwner(owner: string) {
     }
   )
 }
-
 </script>
 
 <template>

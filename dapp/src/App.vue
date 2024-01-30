@@ -1,48 +1,26 @@
 <script setup lang="ts">
 import CryptoZombiesView from './components/CryptoZombiesView.vue'
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import Web3 from 'web3'
-import { Contract } from 'web3'
 import { onBeforeMount, ref } from 'vue'
-
-import cryptozombiesABI from './abi/zombieownership.sol/ZombieOwnership.json';
+import Web3Utils from './utils/web3utils.ts';
 
 // Metamask injected
 declare global {
   var ethereum: MetaMaskInpageProvider;
 }
 
-var cryptoZombiesContract: Contract<any>
-const account = ref<string>();
-var web3js: Web3
-
-function initializeApp() {
-  console.log('App is initializing...');
-  ethEnabled()
-}
-
-window.ethereum.on('accountsChanged', () => initializeApp());
-
 onBeforeMount(() => {
   initializeApp();
 });
 
-function ethEnabled() {
-  if (window.ethereum) {
-    console.log("Init Web 3");
-    window.ethereum.request({ method: 'eth_requestAccounts' });
-    web3js = new Web3(ethereum);
-    web3js.eth.getAccounts().then((accounts: string[]) => {
-      account.value = accounts[0];
-      // console.log("account : " + account);
-    })
-    cryptoZombiesContract = new web3js.eth.Contract(cryptozombiesABI.abi, "0x5FbDB2315678afecb367f032d93F642f64180aa3");
-  } else {
-    console.log("no window.ethereum, install Metamask");
-  }
+const web3Interact: any = ref<Web3Utils>(new Web3Utils(window.ethereum));
 
+function initializeApp() {
+  console.log('App is initializing...');
+  web3Interact.value.ethInit();
 }
 
+window.ethereum.on('accountsChanged', () => initializeApp());
 </script>
 
 <template>
@@ -54,7 +32,8 @@ function ethEnabled() {
       </a>
     </h1>
   </div>
-  <CryptoZombiesView v-if="account !== undefined" :owner="account" :cryptoZombiesContract="cryptoZombiesContract" />
+  <CryptoZombiesView v-if="web3Interact.account !== undefined" :owner="web3Interact.account"
+    :cryptoZombiesContract="web3Interact.cryptoZombiesContract" />
 </template>
 
 <style scoped>
