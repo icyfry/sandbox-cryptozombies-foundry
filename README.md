@@ -4,7 +4,7 @@
 [![Build](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/build.yml/badge.svg)](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/build.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=icyfry_sandbox-cryptozombies-foundry&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=icyfry_sandbox-cryptozombies-foundry)
 
-This repository contains source codes for experimentation of [Cryptozombies](https://cryptozombies.io/en/) with [Foundry](https://github.com/foundry-rs)
+This repository contains source codes for experimentation of [Cryptozombies](https://cryptozombies.io/en/) with [Foundry](https://github.com/foundry-rs) and [Vue.js](https://vuejs.org/)
 
 <img src="dapp/public/cryptozombies.png" />
 
@@ -41,7 +41,7 @@ Launch a local testnet node, see [Anvil doc](https://book.getfoundry.sh/referenc
 ```
 anvil
 ```
-Deploy contracts on local testnet
+Build and deploy contracts on local testnet
 ```
 task contracts-test contracts-deploy
 ```

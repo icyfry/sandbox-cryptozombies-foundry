@@ -12,7 +12,7 @@ tasks:
     dir: contracts
     cmds:
       - forge fmt
-      - forge build --out "../dapp/src/abi"
+      - forge build --out "../dapp/abi"
 
   contracts-test:
     dir: contracts
