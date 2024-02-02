@@ -13,11 +13,6 @@ tasks:
     cmds:
       - forge fmt
       - forge build --out "../dapp/abi"
-
-  contracts-test:
-    dir: contracts
-    deps: [contracts-build]
-    cmds:
       - forge test --gas-report
 
   contracts-deploy:
@@ -25,7 +20,7 @@ tasks:
     cmds:
       - forge create --rpc-url "http://127.0.0.1:8545"
                      --private-key "{{.PRIVATE_KEY_LOCAL}}"
-                     src/zombiefeeding.sol:ZombieFeeding
+                     src/zombieownership.sol:ZombieOwnership
 
   frontend-build:
     dir: dapp
