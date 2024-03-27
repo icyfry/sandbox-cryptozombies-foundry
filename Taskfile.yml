@@ -15,13 +15,22 @@ tasks:
       - forge build --out "../dapp/abi"
       - forge test --gas-report
 
+  contracts-deploy-script:
+    dir: contracts/script
+    cmds:
+      - forge script --rpc-url http://127.0.0.1:8545
+                     --private-key {{.PRIVATE_KEY_LOCAL}}
+                     --broadcast
+                     DeployZombieOwnership   
+
   contracts-deploy:
     dir: contracts
     cmds:
-      - forge create --rpc-url "http://127.0.0.1:8545"
-                     --private-key "{{.PRIVATE_KEY_LOCAL}}"
-                     src/zombieownership.sol:ZombieOwnership
-
+      - forge create --rpc-url http://127.0.0.1:8545
+                     --private-key {{.PRIVATE_KEY_LOCAL}}
+                     ZombieOwnership
+                     # -- interactive
+                     # src/zombieownership.sol:ZombieOwnership
   frontend-build:
     dir: dapp
     cmds:
