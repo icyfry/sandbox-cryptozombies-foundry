@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ZombieFactory is Ownable {
-    event NewZombie(uint256 zombieId, string name, uint256 dna);
+    event NewZombie(uint256 indexed zombieId, string indexed name, uint256 indexed dna);
 
     uint256 dnaDigits = 16;
     uint256 dnaModulus = 10 ** dnaDigits;

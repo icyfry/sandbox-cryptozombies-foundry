@@ -5,8 +5,9 @@ import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./zombieattack.sol";
 
-abstract contract ZombieOwnership is ZombieAttack, IERC721 {
+contract ZombieOwnership is ZombieAttack, IERC721 {
     mapping(uint256 => address) zombieApprovals;
+    mapping(address => mapping(address => bool)) operatorApprovals;
 
     function balanceOf(address _owner) external view returns (uint256) {
         return ownerZombieCount[_owner];
@@ -31,5 +32,38 @@ abstract contract ZombieOwnership is ZombieAttack, IERC721 {
     function approve(address _approved, uint256 _tokenId) external onlyOwnerOf(_tokenId) {
         zombieApprovals[_tokenId] = _approved;
         emit Approval(msg.sender, _approved, _tokenId);
+    }
+
+    function test() external pure returns (uint256) {
+        return 777;
+    }
+
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external {
+        // Implement your logic here
+        _transfer(from, to, tokenId);
+    }
+
+    function safeTransferFrom(address from, address to, uint256 tokenId) external {
+        // Implement your logic here
+        _transfer(from, to, tokenId);
+    }
+
+    function setApprovalForAll(address operator, bool approved) external {
+        // Implement your logic here
+        operatorApprovals[msg.sender][operator] = approved;
+    }
+
+    function getApproved(uint256 tokenId) external view returns (address operator) {
+        // Implement your logic here
+        return zombieApprovals[tokenId];
+    }
+
+    function isApprovedForAll(address owner, address operator) external view returns (bool) {
+        // Implement your logic here
+        return operatorApprovals[owner][operator];
+    }
+
+    function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
+        return interfaceId == type(IERC721).interfaceId;
     }
 }
