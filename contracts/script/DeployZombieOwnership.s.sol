@@ -9,10 +9,8 @@ contract DeployZombieOwnership is Script {
 
     function run() public {
         vm.startBroadcast();
-
         ZombieOwnership zombieownership = new ZombieOwnership();
         console.log("ZombieOwnership deployed at address: ", address(zombieownership));
-
         vm.stopBroadcast();
     }
 }

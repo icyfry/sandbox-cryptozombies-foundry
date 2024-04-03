@@ -1,33 +1,25 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { Contract } from 'web3'
+import { Zombie, Web3Utils } from '../utils/web3utils.ts';
 
-const props = defineProps<{ owner: string, cryptoZombiesContract: Contract<any> }>();
+const props = defineProps<{ web3Interact: Web3Utils }>();
 
-var zombies: string
+var zombies: Zombie[]
 var error: string
 
 onMounted(() => {
-  getZombiesByOwner(props.owner)
+  zombies = props.web3Interact.getZombiesForAccount()
 })
-
-function getZombiesByOwner(owner: string) {
-  props.cryptoZombiesContract.methods.getZombiesByOwner(owner).call().then(
-    function (value: any) {
-      zombies = value;
-    }
-  ).catch(
-    function (reason: any) {
-      error = reason;
-    }
-  )
-}
 </script>
 
 <template>
   <div class="zombieview">
-    <h2>Account : {{ owner }}</h2>
-    {{ zombies }}
+    <h2>Account : {{ props.web3Interact.account }}</h2>
+    <ul>
+      <li v-for="item in zombies">
+        🧟 {{ item.name }} {{ item.dna }}
+      </li>
+    </ul>
   </div>
   <div class="error">
     {{ error }}
@@ -37,6 +29,10 @@ function getZombiesByOwner(owner: string) {
 <style scoped>
 .zombieview {
   background-color: #616161;
+}
+
+.zombieview li {
+  list-style-type: none;
 }
 
 .error {

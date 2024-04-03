@@ -2,7 +2,7 @@
 import CryptoZombiesView from './components/CryptoZombiesView.vue'
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { onBeforeMount, ref } from 'vue'
-import Web3Utils from './utils/web3utils.ts';
+import { Web3Utils } from './utils/web3utils.ts';
 
 // Metamask injected
 declare global {
@@ -28,12 +28,12 @@ window.ethereum.on('accountsChanged', () => initializeApp());
     <img src="/cryptozombies.png" class="logo" alt="Vite logo" />
     <h1>
       Test Frontend
-      <a href="https://github.com/icyfry/sandbox-cryptozombies-foundry" target="_blank">sandbox-cryptozombies-foundry
+      <a href="https://github.com/icyfry/sandbox-foundry" target="_blank" rel="noopener">sandbox-foundry
       </a>
     </h1>
   </div>
-  <CryptoZombiesView v-if="web3Interact.account !== undefined" :owner="web3Interact.account"
-    :cryptoZombiesContract="web3Interact.cryptoZombiesContract" />
+  <button v-on:click="web3Interact.createRandomZombie('test')">Create a Random Zombie</button>
+  <CryptoZombiesView v-if="web3Interact.account !== undefined" :web3Interact="web3Interact" />
 </template>
 
 <style scoped>
