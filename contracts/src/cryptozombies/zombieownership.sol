@@ -39,27 +39,22 @@ contract ZombieOwnership is ZombieAttack, IERC721 {
     }
 
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external {
-        // Implement your logic here
         _transfer(from, to, tokenId);
     }
 
     function safeTransferFrom(address from, address to, uint256 tokenId) external {
-        // Implement your logic here
         _transfer(from, to, tokenId);
     }
 
     function setApprovalForAll(address operator, bool approved) external {
-        // Implement your logic here
         operatorApprovals[msg.sender][operator] = approved;
     }
 
     function getApproved(uint256 tokenId) external view returns (address operator) {
-        // Implement your logic here
         return zombieApprovals[tokenId];
     }
 
     function isApprovedForAll(address owner, address operator) external view returns (bool) {
-        // Implement your logic here
         return operatorApprovals[owner][operator];
     }
 

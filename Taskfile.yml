@@ -31,7 +31,7 @@ tasks:
       - forge create --rpc-url {{.RPC_URL}}
                      --account defaultKey
                      --password-file ".password"
-                     src/zombieownership.sol:ZombieOwnership
+                     src/cryptozombies/zombieownership.sol:ZombieOwnership
                      # --interactive
                      # --private-key {{.PRIVATE_KEY_LOCAL}}
   frontend-build:

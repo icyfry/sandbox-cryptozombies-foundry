@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {ZombieFactory} from "../src/zombiefactory.sol";
+import {ZombieFactory} from "../src/cryptozombies/zombiefactory.sol";
 
 contract CounterTest is Test {
     ZombieFactory public zombieFactory;
