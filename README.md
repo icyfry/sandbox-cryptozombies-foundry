@@ -24,9 +24,11 @@ foundryup
 
 Install OpenZeppelin
 ```
-forge install OpenZeppelin/openzeppelin-contracts
-forge remappings > remappings.txt
+forge install OpenZeppelin/openzeppelin-contracts --no-commit
+forge install smartcontractkit/chainlink-brownie-contracts@0.8.0 --no-commit
 ```
+
+If needed, to init remappings use `forge remappings > remappings.txt`
 
 ### Add private key to foundry keystore
 
