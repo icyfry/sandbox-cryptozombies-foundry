@@ -13,7 +13,11 @@ tasks:
     cmds:
       - forge fmt
       - forge build --out "../dapp/abi"
-      - forge test --gas-report
+
+  contracts-test:
+    dir: contracts
+    cmds:
+      - forge test -vvv --gas-report
 
   contracts-deploy-script:
     dir: contracts/script

@@ -47,7 +47,22 @@ then add the password in `contracts/.password` file and `PUBLIC_KEY_LOCAL` publi
 
 The frontend in `dapp` has been created with [vitejs](https://vitejs.dev/guide/) and [vitest](https://vitest.dev/guide/) for unit testing 
 
-## Test
+
+## Test Contracts
+
+Run tests on contracts
+```
+task contracts-test
+or
+forge test --fork-url <URL>
+```
+
+Test call with cast for Cryptozombies
+```
+cast call 0x... "getZombiesByOwner(address _owner)" "0x..."
+```
+
+## Run Contracts and Frontend
 
 Launch a local testnet node, see [Anvil doc](https://book.getfoundry.sh/reference/anvil/)
 ```
@@ -64,15 +79,9 @@ Launch frontend
 task frontend-build frontend-run
 ```
 
-## Cast
-
-Test call with cast for Cryptozombies
-```
-cast call 0x... "getZombiesByOwner(address _owner)" "0x..."
-```
-
 ## Resources
 
 * https://www.cyfrin.io/blog/top-web3-tools-for-developers
 * https://github.com/foundry-rs/foundry
 * https://docs.soliditylang.org/en/v0.8.23/
+* https://updraft.cyfrin.io/courses/foundry

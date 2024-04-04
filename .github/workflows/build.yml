@@ -63,7 +63,7 @@ jobs:
         version: nightly
     - name: Generate ABI with foundry
       working-directory: contracts
-      run: forge build --out "../dapp/src/abi"
+      run: forge build --out "../dapp/abi"
     - name: Installing project dependencies
       run: pnpm install
     - name: Build and tests
