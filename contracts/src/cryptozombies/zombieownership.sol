@@ -34,10 +34,6 @@ contract ZombieOwnership is ZombieAttack, IERC721 {
         emit Approval(msg.sender, _approved, _tokenId);
     }
 
-    function test() external pure returns (uint256) {
-        return 777;
-    }
-
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external {
         _transfer(from, to, tokenId);
     }
