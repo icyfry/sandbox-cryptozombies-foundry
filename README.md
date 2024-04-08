@@ -62,17 +62,19 @@ Test call with cast for Cryptozombies
 cast call 0x... "getZombiesByOwner(address _owner)" "0x..."
 ```
 
+### Gas
+
+Create a gas usage snapshot file `.gas-snapshot` with `forge snapshot`
+
 ## Run Contracts and Frontend
 
 Launch a local testnet node, see [Anvil doc](https://book.getfoundry.sh/reference/anvil/)
 ```
 anvil
 ```
-Build and deploy contracts on local testnet
+Build and deploy contracts
 ```
 task contracts-build contracts-deploy-script
-or
-task contracts-build contracts-deploy
 ```
 Launch frontend
 ```

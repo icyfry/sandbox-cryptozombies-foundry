@@ -1,3 +1,6 @@
 # Dotenv file
 .env
+.env.local
+.env.mainnet
+.env.sepolia
 .password

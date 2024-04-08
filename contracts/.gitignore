@@ -3,6 +3,7 @@ cache/
 out/
 bin/
 broadcast/
+.gas-snapshot
 
 # Ignores development broadcast logs
 !/broadcast

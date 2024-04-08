@@ -1,6 +1,9 @@
 version: '3'
 
-dotenv: ['.env']
+env:
+  ENV: local
+
+dotenv: ['.env', '.env.{{.ENV}}']
 
 tasks:
 
@@ -19,15 +22,26 @@ tasks:
     cmds:
       - forge test -vvv --gas-report
 
+  contracts-gas:
+    dir: contracts
+    cmds:
+      - forge snapshot
+
   contracts-deploy-script:
     dir: contracts/script
     cmds:
       - forge script --rpc-url {{.RPC_URL}}
                      --account defaultKey
-                     --sender {{.PUBLIC_KEY_LOCAL}}
+                     --sender {{.PUBLIC_KEY}}
                      --broadcast
                      --password-file "../.password"
                      DeployZombieOwnership
+      - forge script --rpc-url {{.RPC_URL}}
+                     --account defaultKey
+                     --sender {{.PUBLIC_KEY}}
+                     --broadcast
+                     --password-file "../.password"
+                     DeployFundMe
 
   contracts-deploy:
     dir: contracts
@@ -36,8 +50,27 @@ tasks:
                      --account defaultKey
                      --password-file ".password"
                      src/cryptozombies/zombieownership.sol:ZombieOwnership
-                     # --interactive
-                     # --private-key {{.PRIVATE_KEY_LOCAL}}
+
+  fundme-FundFundMe:
+    dir: contracts/script
+    cmds:
+      - forge script --rpc-url {{.RPC_URL}}
+                     --account defaultKey
+                     --sender {{.PUBLIC_KEY}}
+                     --broadcast
+                     --password-file "../.password"
+                     InteractionsFundMe.s.sol:FundFundMe
+
+  fundme-WithdrawFundMe:
+    dir: contracts/script
+    cmds:
+      - forge script --rpc-url {{.RPC_URL}}
+                     --account defaultKey
+                     --sender {{.PUBLIC_KEY}}
+                     --broadcast
+                     --password-file "../.password"
+                     InteractionsFundMe.s.sol:WithdrawFundMe
+
   frontend-build:
     dir: dapp
     cmds:
