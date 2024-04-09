@@ -13,7 +13,7 @@ env:
 jobs:
 
   foundry:
-    name: Cryptozombies foundry project
+    name: Foundry project
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -24,6 +24,10 @@ jobs:
       - uses: actions/checkout@master
         with:
           submodules: recursive
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
@@ -31,11 +35,11 @@ jobs:
       - name: Run Forge build
         run: |
           forge --version
-          forge build --sizes
+          task contracts-build
         id: build
       - name: Run Forge tests
         run: |
-          forge test -vvv
+          task contracts-test
         id: test
 
   dapp:
@@ -61,9 +65,12 @@ jobs:
       uses: foundry-rs/foundry-toolchain@v1
       with:
         version: nightly
+    - name: Install Task
+      uses: arduino/setup-task@v2
+      with:
+        version: 3.x
     - name: Generate ABI with foundry
-      working-directory: contracts
-      run: forge build --out "../dapp/abi"
+      run: task contracts-build
     - name: Installing project dependencies
       run: pnpm install
     - name: Build and tests

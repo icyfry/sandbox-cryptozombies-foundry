@@ -27,35 +27,35 @@ tasks:
     cmds:
       - forge snapshot
 
-  contracts-deploy-script:
+  fundme-test:
+    dir: contracts
+    cmds:
+      - forge test --match-path *fundme.*.sol -vvv --gas-report --fork-url {{.RPC_URL}} 
+
+  fundme-deploy:
     dir: contracts/script
     cmds:
       - forge script --rpc-url {{.RPC_URL}}
-                     --account defaultKey
-                     --sender {{.PUBLIC_KEY}}
-                     --broadcast
-                     --password-file "../.password"
-                     DeployZombieOwnership
-      - forge script --rpc-url {{.RPC_URL}}
-                     --account defaultKey
+                     --account {{.KEYSTORE_ACCOUNT}}
                      --sender {{.PUBLIC_KEY}}
                      --broadcast
                      --password-file "../.password"
                      DeployFundMe
 
-  contracts-deploy:
-    dir: contracts
+  fundme-deploy-dryrun:
+    dir: contracts/script
     cmds:
-      - forge create --rpc-url {{.RPC_URL}}
-                     --account defaultKey
-                     --password-file ".password"
-                     src/cryptozombies/zombieownership.sol:ZombieOwnership
+      - forge script --rpc-url {{.RPC_URL}}
+                     --account {{.KEYSTORE_ACCOUNT}}
+                     --sender {{.PUBLIC_KEY}}
+                     --password-file "../.password"
+                     DeployFundMe
 
   fundme-FundFundMe:
     dir: contracts/script
     cmds:
       - forge script --rpc-url {{.RPC_URL}}
-                     --account defaultKey
+                     --account {{.KEYSTORE_ACCOUNT}}
                      --sender {{.PUBLIC_KEY}}
                      --broadcast
                      --password-file "../.password"
@@ -65,7 +65,7 @@ tasks:
     dir: contracts/script
     cmds:
       - forge script --rpc-url {{.RPC_URL}}
-                     --account defaultKey
+                     --account {{.KEYSTORE_ACCOUNT}}
                      --sender {{.PUBLIC_KEY}}
                      --broadcast
                      --password-file "../.password"

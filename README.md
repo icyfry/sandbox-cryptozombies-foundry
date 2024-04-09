@@ -74,7 +74,7 @@ anvil
 ```
 Build and deploy contracts
 ```
-task contracts-build contracts-deploy-script
+task contracts-build fundme-deploy
 ```
 Launch frontend
 ```
