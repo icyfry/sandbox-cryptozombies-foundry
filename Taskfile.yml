@@ -11,11 +11,19 @@ tasks:
     cmds:
       - task --list-all
 
+  anvil:
+    cmds:
+      - anvil --block-time 10
+
   contracts-build:
     dir: contracts
     cmds:
       - forge fmt
-      - forge build --out "../dapp/abi"
+      - forge build
+
+  contracts-deploy:
+    - task: fundme-deploy
+    - task: cryptozombies-deploy
 
   contracts-test:
     dir: contracts
@@ -41,6 +49,16 @@ tasks:
                      --broadcast
                      --password-file "../.password"
                      DeployFundMe
+
+  cryptozombies-deploy:
+    dir: contracts/script
+    cmds:
+      - forge script --rpc-url {{.RPC_URL}}
+                     --account {{.KEYSTORE_ACCOUNT}}
+                     --sender {{.PUBLIC_KEY}}
+                     --broadcast
+                     --password-file "../.password"
+                     DeployZombieOwnership
 
   fundme-deploy-dryrun:
     dir: contracts/script
@@ -81,4 +99,4 @@ tasks:
     dir: dapp
     deps: [frontend-build]
     cmds:
-      - pnpm run dev --open
+      - pnpm run dev

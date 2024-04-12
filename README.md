@@ -74,7 +74,7 @@ anvil
 ```
 Build and deploy contracts
 ```
-task contracts-build fundme-deploy
+task contracts-build contracts-deploy
 ```
 Launch frontend
 ```
@@ -85,5 +85,8 @@ task frontend-build frontend-run
 
 * https://www.cyfrin.io/blog/top-web3-tools-for-developers
 * https://github.com/foundry-rs/foundry
+* https://book.getfoundry.sh/
 * https://docs.soliditylang.org/en/v0.8.23/
 * https://updraft.cyfrin.io/courses/foundry
+* https://github.com/ChainSafe/web3js-example-react-app
+* https://docs.web3js.org/
