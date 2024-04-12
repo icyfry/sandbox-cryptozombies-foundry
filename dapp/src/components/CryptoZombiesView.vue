@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Zombie, Web3Utils } from '../utils/web3utils.ts';
 
 const props = defineProps<{ web3Interact: Web3Utils }>();
 
-var zombies: Zombie[]
-var error: string
+let zombies = ref<Zombie[]>([]);
 
 onMounted(() => {
-  zombies = props.web3Interact.getZombiesForAccount()
+  props.web3Interact.getZombiesForAccount().then((value) => {
+    zombies.value = value;
+  }).catch((err) => {
+    console.log(err)
+  })
 })
 </script>
 
@@ -21,9 +24,6 @@ onMounted(() => {
       </li>
     </ul>
   </div>
-  <div class="error">
-    {{ error }}
-  </div>
 </template>
 
 <style scoped>
@@ -33,9 +33,5 @@ onMounted(() => {
 
 .zombieview li {
   list-style-type: none;
-}
-
-.error {
-  background-color: #a70000;
 }
 </style>
