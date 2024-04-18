@@ -4,9 +4,12 @@ import Web3, { Contract, Web3ContractError } from 'web3';
 // Foundry generated contracts and broadcasts
 import cryptozombiesABI from '../../../contracts/out/zombieownership.sol/ZombieOwnership.json';
 import fundmeABI from '../../../contracts/out/FundMe.sol/FundMe.json';
-import cryptozombiesBroadcastLocal from '../../../contracts/broadcast/DeployZombieOwnership.s.sol/31337/run-latest.json';
-import fundmeBroadcastLocal from '../../../contracts/broadcast/DeployFundMe.s.sol/31337/run-latest.json';
 import fundmeBroadcastSepolia from '../../../contracts/broadcast/DeployFundMe.s.sol/11155111/run-latest.json';
+
+// Local broadcast data (anvil)
+let cryptozombiesBroadcastLocal: any
+let fundmeBroadcastLocal: any;
+console.log(process.env.NODE_ENV);
 
 export class Web3Utils {
 
@@ -17,19 +20,31 @@ export class Web3Utils {
     public cryptoZombiesContract!: Contract<any>;
     public fundmeContract!: Contract<any>;
 
+    async getCryptozombiesBroadcastLocal(): Promise<any> {
+        if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
+        cryptozombiesBroadcastLocal = await import('../../../contracts/broadcast/DeployZombieOwnership.s.sol/31337/run-latest.json');
+        return cryptozombiesBroadcastLocal;
+    }
+
+    async getFundmeBroadcastLocal(): Promise<any> {
+        if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
+        fundmeBroadcastLocal = await import('../../../contracts/broadcast/DeployFundMe.s.sol/31337/run-latest.json');
+        return fundmeBroadcastLocal;
+    }
+
     // Foundry broadcast data
-    private BROADCAST: { [key: number]: any } = {
+    private BROADCAST: { [key: number]: { cryptoZombies: Promise<any>, fundme: Promise<any> } } = {
         1: { // Mainnet
-            cryptoZombies: null,
-            fundme: null
+            cryptoZombies: Promise.resolve(null),
+            fundme: Promise.resolve(null),
         },
         11155111: { // Sepolia
-            cryptoZombies: fundmeBroadcastSepolia,
-            fundme: fundmeBroadcastSepolia
+            cryptoZombies: Promise.resolve(fundmeBroadcastSepolia),
+            fundme: Promise.resolve(fundmeBroadcastSepolia)
         },
         31337: { // Local
-            cryptoZombies: cryptozombiesBroadcastLocal,
-            fundme: fundmeBroadcastLocal
+            cryptoZombies: this.getCryptozombiesBroadcastLocal(),
+            fundme: this.getFundmeBroadcastLocal()
         },
     };
 
@@ -40,6 +55,25 @@ export class Web3Utils {
         else {
             console.log("no window.ethereum, install Metamask");
         }
+    }
+
+    private getContractAddressInBroadcast(broadcast: any, contractName: string): string | null {
+        for (const transaction of broadcast.transactions) {
+            if (transaction.contractName === contractName) {
+                return transaction.contractAddress;
+            }
+        }
+        return null;
+    }
+
+    async getFundmeContractAddress(networkId: bigint): Promise<string | null> {
+        if (this.BROADCAST[Number(networkId)]?.fundme == null) throw new Error("No contract found for network " + networkId);
+        return this.getContractAddressInBroadcast(await this.BROADCAST[Number(networkId)].fundme, "FundMe");
+    }
+
+    async getCryptozombiesContractAddress(networkId: bigint): Promise<string | null> {
+        if (this.BROADCAST[Number(networkId)]?.cryptoZombies == null) throw new Error("No contract found for network " + networkId);
+        return this.getContractAddressInBroadcast(await this.BROADCAST[Number(networkId)].cryptoZombies, "ZombieOwnership");
     }
 
     initialize(): void {
@@ -59,35 +93,19 @@ export class Web3Utils {
 
             this.web3js.eth.net.getId().then((id: bigint) => {
                 this.networkId = id
-                const cryptozombiesContractAddress = this.getCryptozombiesContractAddress(this.networkId) as string
-                const fundmeContractAddress = this.getFundmeContractAddress(this.networkId) as string
-                this.cryptoZombiesContract = new this.web3js.eth.Contract(cryptozombiesABI.abi, cryptozombiesContractAddress);
-                this.fundmeContract = new this.web3js.eth.Contract(fundmeABI.abi, fundmeContractAddress);
+                this.getCryptozombiesContractAddress(this.networkId).then((address) => {
+                    const cryptozombiesContractAddress = address as string
+                    this.cryptoZombiesContract = new this.web3js.eth.Contract(cryptozombiesABI.abi, cryptozombiesContractAddress);
+                });
+                this.getFundmeContractAddress(this.networkId).then((address) => {
+                    const fundmeContractAddress = address as string
+                    this.fundmeContract = new this.web3js.eth.Contract(fundmeABI.abi, fundmeContractAddress);
+                });
             });
 
         } catch (error) {
             throw new Error("Error during initialize Web 3 " + this.networkId + " " + this.account);
         }
-    }
-
-    getFundmeContractAddress(networkId: bigint): string | null {
-        if (this.BROADCAST[Number(networkId)]?.fundme == null) throw new Error("No contract found for network " + networkId);
-        for (const transaction of this.BROADCAST[Number(networkId)].fundme.transactions) {
-            if (transaction.contractName === "FundMe") {
-                return transaction.contractAddress;
-            }
-        }
-        return null;
-    }
-
-    getCryptozombiesContractAddress(networkId: bigint): string | null {
-        if (this.BROADCAST[Number(networkId)]?.cryptoZombies == null) throw new Error("No contract found for network " + networkId);
-        for (const transaction of this.BROADCAST[Number(networkId)].cryptoZombies.transactions) {
-            if (transaction.contractName === "ZombieOwnership") {
-                return transaction.contractAddress;
-            }
-        }
-        return null;
     }
 
     createRandomZombie(name: string) {
@@ -125,6 +143,7 @@ export class Web3Utils {
                 console.error(reason);
             }
         )
+        console.log("Zombies: " + zombies)
         return zombies;
     }
 

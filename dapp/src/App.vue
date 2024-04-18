@@ -23,6 +23,7 @@ function initializeApp(): void {
 }
 
 window.ethereum.on('accountsChanged', (): void => initializeApp());
+window.ethereum.on('chainChanged', (): void => initializeApp());
 </script>
 
 <template>
