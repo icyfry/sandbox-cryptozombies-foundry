@@ -21,14 +21,30 @@ export class Web3Utils {
     public fundmeContract!: Contract<any>;
 
     async getCryptozombiesBroadcastLocal(): Promise<any> {
+        console.log(process.env.NODE_ENV);
         if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
-        cryptozombiesBroadcastLocal = await import('../../../contracts/broadcast/DeployZombieOwnership.s.sol/31337/run-latest.json');
+        cryptozombiesBroadcastLocal = {
+            transactions: [
+                {
+                    "contractName": "ZombieOwnership",
+                    "contractAddress": ""
+                }
+            ]
+        };
+        return fundmeBroadcastLocal;
         return cryptozombiesBroadcastLocal;
     }
 
     async getFundmeBroadcastLocal(): Promise<any> {
         if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
-        fundmeBroadcastLocal = await import('../../../contracts/broadcast/DeployFundMe.s.sol/31337/run-latest.json');
+        fundmeBroadcastLocal = {
+            transactions: [
+                {
+                    "contractName": "FundMe",
+                    "contractAddress": ""
+                }
+            ]
+        };
         return fundmeBroadcastLocal;
     }
 
@@ -86,7 +102,7 @@ export class Web3Utils {
             this.ethereum.request({ method: 'eth_requestAccounts' });
             this.web3js = new Web3(this.ethereum);
 
-            this.web3js.eth.getAccounts().then((accounts) => {
+            this.web3js.eth.getAccounts().then((accounts: any[]) => {
                 this.account = this.web3js.utils.toChecksumAddress(accounts[0]);
                 console.log("Account: " + this.account);
             });
