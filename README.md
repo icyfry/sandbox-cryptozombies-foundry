@@ -1,8 +1,8 @@
 # Sandbox Foundry
 
 <img src="https://img.shields.io/badge/solidity-0.8.13-005850?style=flat"> <img src="https://img.shields.io/badge/Vue.js-35495E?logo=vuedotjs&logoColor=4FC08D" /> <img src="https://img.shields.io/badge/-Ethereum-005850?style=flat&logo=Ethereum">
-[![Build](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/build.yml/badge.svg)](https://github.com/icyfry/sandbox-cryptozombies-foundry/actions/workflows/build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=icyfry_sandbox-cryptozombies-foundry&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=icyfry_sandbox-cryptozombies-foundry)
+[![Build](https://github.com/icyfry/sandbox-foundry/actions/workflows/build.yml/badge.svg)](https://github.com/icyfry/sandbox-foundry/actions/workflows/build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=icyfry_sandbox-foundry&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=icyfry_sandbox-foundry)
 
 This repository contains source codes for experimentation with [Foundry](https://github.com/foundry-rs) and [Vue.js](https://vuejs.org/)
 
@@ -20,6 +20,11 @@ Courses used in the repository
 curl -L https://foundry.paradigm.xyz | bash
 source ~/.bashrc
 foundryup
+```
+
+[Creating a new foundry project](https://book.getfoundry.sh/projects/creating-a-new-project)
+```
+forge init
 ```
 
 Install OpenZeppelin
@@ -87,6 +92,8 @@ task frontend-build frontend-run
 * https://github.com/foundry-rs/foundry
 * https://book.getfoundry.sh/
 * https://docs.soliditylang.org/en/v0.8.23/
-* https://updraft.cyfrin.io/courses/foundry
+* Cyfrin
+    * https://updraft.cyfrin.io/courses/foundry
+    * https://updraft.cyfrin.io/courses/advanced-foundry
 * https://github.com/ChainSafe/web3js-example-react-app
 * https://docs.web3js.org/

@@ -93,6 +93,7 @@ tasks:
     dir: dapp
     cmds:
       - pnpm i
+      - pnpm run coverage
       - pnpm run build
 
   frontend-run:

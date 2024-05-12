@@ -9,7 +9,9 @@ import fundmeBroadcastSepolia from '../../../contracts/broadcast/DeployFundMe.s.
 // Local broadcast data (anvil)
 let cryptozombiesBroadcastLocal: any
 let fundmeBroadcastLocal: any;
-console.log(process.env.NODE_ENV);
+
+// Log NODE_ENV
+console.log("ENV:" + process.env.NODE_ENV);
 
 export class Web3Utils {
 
@@ -21,8 +23,7 @@ export class Web3Utils {
     public fundmeContract!: Contract<any>;
 
     async getCryptozombiesBroadcastLocal(): Promise<any> {
-        console.log(process.env.NODE_ENV);
-        if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
+        // if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
         cryptozombiesBroadcastLocal = {
             transactions: [
                 {
@@ -31,12 +32,11 @@ export class Web3Utils {
                 }
             ]
         };
-        return fundmeBroadcastLocal;
         return cryptozombiesBroadcastLocal;
     }
 
     async getFundmeBroadcastLocal(): Promise<any> {
-        if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
+        // if (process.env.NODE_ENV !== 'development') throw new Error("Not in development mode");
         fundmeBroadcastLocal = {
             transactions: [
                 {
